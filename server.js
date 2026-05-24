@@ -1,18 +1,18 @@
 const path = require('path');
+// Load .env ONLY from the current project folder
 require('dotenv').config({ path: path.join(__dirname, '.env') });
-console.log('Loaded PORT:', process.env.PORT);  
 
+// Debug (optional – remove later)
+console.log('PORT from .env:', process.env.PORT);
+console.log('MONGODB_URI from .env:', process.env.MONGODB_URI);
+console.log('DB_NAME from .env:', process.env.DB_NAME);
 
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
-
-require('dotenv').config({ path: './.env' });
-
-const { connectDB, getItemsCollection } = require('./db');
+const { connectDB } = require('./db');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3000; 
 
 console.log('PORT from env:', process.env.PORT);
 console.log('MONGODB_URI from env:', process.env.MONGODB_URI);
@@ -67,6 +67,13 @@ app.get('/', (req, res) => {
 // Items routes
 const itemsRoutes = require('./routes/items');
 app.use('/api/items', itemsRoutes);
+
+app.get('/debug-routes', (req, res) => {
+    res.json({ message: 'Server is running', registeredRoutes: app._router.stack.filter(r => r.route).map(r => r.route.path) });
+});
+
+const customersRoutes = require('./routes/customers');
+app.use('/api/customers', customersRoutes);
 
 // Start server
 connectDB().then(() => {

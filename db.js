@@ -60,5 +60,8 @@ async function closeDB() {
         console.log('MongoDB connection closed');
     }
 }
-
-module.exports = { connectDB, getDB, getItemsCollection, closeDB };
+function getCustomersCollection() {
+    if (!db) throw new Error('Database not connected');
+    return db.collection('customers');
+}
+module.exports = { connectDB, getDB, getItemsCollection, getCustomersCollection, closeDB };
