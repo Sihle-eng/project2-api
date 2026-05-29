@@ -99,7 +99,16 @@ app.set('views', path.join(__dirname, 'views'));
 
 // browser auth routes
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Login</title></head>
+        <body>
+            <h1>Welcome to My API</h1>
+            <a href="/auth/github">Login with GitHub</a>
+        </body>
+        </html>
+    `);
 });
 
 app.get('/auth/github',
