@@ -69,6 +69,12 @@ function getUsersCollection() {
     if (!db) throw new Error('Database not connected');
     return db.collection('users');
 }
+function getClient() {
+    if (!client) {
+        throw new Error('Database not connected. Call connectDB() first.');
+    }
+    return client;
+}
 
 
-module.exports = { connectDB, getDB, getItemsCollection, getCustomersCollection, getUsersCollection, closeDB };
+module.exports = { connectDB, getDB, getItemsCollection, getCustomersCollection, getUsersCollection, closeDB, getClient };
